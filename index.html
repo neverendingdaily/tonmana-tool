@@ -149,14 +149,19 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 <div class="body">
   <div class="sb">
 
-    <div class="sb-s">
-      <div class="lbl">Gemini API Key</div>
-      <div class="fw">
-        <input class="f" id="ak" type="password" placeholder="AIza..." autocomplete="off">
-        <button class="eye" id="eye">👁</button>
-      </div>
-      <div class="st"><div class="dot" id="dot"></div><span id="st-txt" style="font-size:11px;color:var(--muted);">APIキーを入力してください</span></div>
-    </div>
+<div class="sb-s">
+      <div class="lbl">Gemini API Key</div>
+      <!-- ▼ ここを横並び(flex)にして保存ボタンを追加 ▼ -->
+      <div style="display:flex; gap:6px;">
+        <div class="fw" style="flex:1;">
+          <input class="f" id="ak" type="password" placeholder="AIza..." autocomplete="off">
+          <button class="eye" id="eye">👁</button>
+        </div>
+        <button id="save-ak-btn" class="fetch-btn">保存</button>
+      </div>
+      <!-- ▲ ここまで ▲ -->
+      <div class="st"><div class="dot" id="dot"></div><span id="st-txt" style="font-size:11px;color:var(--muted);">APIキーを入力してください</span></div>
+    </div>
 
     <div class="sb-s">
       <div class="lbl">モデル</div>
