@@ -149,17 +149,17 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text
 <div class="body">
   <div class="sb">
 
-<div class="sb-s">
-      <div class="lbl">Gemini API Key</div>
-      <div style="display:flex; gap:6px;">
-        <div class="fw" style="flex:1;">
-          <input class="f" id="ak" type="password" placeholder="AIza..." autocomplete="off">
-          <button class="eye" id="eye">👁</button>
-        </div>
-                <button id="save-ak-btn" class="fetch-btn" style="width: 34px; padding: 0; font-size: 14px; display: flex; justify-content: center; align-items: center;" title="APIキーを保存">💾</button>
-      </div>
-      <div class="st"><div class="dot" id="dot"></div><span id="st-txt" style="font-size:11px;color:var(--muted);">APIキーを入力してください</span></div>
-    </div>
+    <div class="sb-s">
+      <div class="lbl">Gemini API Key</div>
+      <div style="display:flex; gap:6px;">
+        <div class="fw" style="flex:1;">
+          <input class="f" id="ak" type="password" placeholder="AIza..." autocomplete="off">
+          <button class="eye" id="eye">👁</button>
+        </div>
+        <button id="save-ak-btn" class="fetch-btn" style="width: 34px; padding: 0; font-size: 14px; display: flex; justify-content: center; align-items: center;" title="APIキーを保存">💾</button>
+      </div>
+      <div class="st"><div class="dot" id="dot"></div><span id="st-txt" style="font-size:11px;color:var(--muted);">APIキーを入力してください</span></div>
+    </div>
 
     <div class="sb-s">
       <div class="lbl">モデル</div>
@@ -277,6 +277,39 @@ var akEl=document.getElementById('ak'),miEl=document.getElementById('mi'),gcEl=d
 var runBtn=document.getElementById('runBtn'),rstBtn=document.getElementById('rstBtn');
 var fb2=document.getElementById('fb2'),fst=document.getElementById('fst');
 var dotEl=document.getElementById('dot'),stTxt=document.getElementById('st-txt');
+
+// ===== APIキー保存・復元機能 =====
+var saveAkBtn = document.getElementById('save-ak-btn');
+
+window.addEventListener('DOMContentLoaded', function() {
+  var savedKey = localStorage.getItem('savedGeminiApiKey');
+  if (savedKey) {
+    akEl.value = savedKey;
+    akEl.dispatchEvent(new Event('input')); // UIの表示を自動更新させる
+  }
+});
+
+if(saveAkBtn) {
+  saveAkBtn.addEventListener('click', function() {
+    var currentKey = akEl.value.trim();
+    if (currentKey) {
+      localStorage.setItem('savedGeminiApiKey', currentKey);
+      var origText = saveAkBtn.textContent;
+      saveAkBtn.textContent = '✓';
+      saveAkBtn.style.color = 'var(--green)';
+      saveAkBtn.style.borderColor = 'var(--green)';
+      setTimeout(function(){
+        saveAkBtn.textContent = origText;
+        saveAkBtn.style.color = '';
+        saveAkBtn.style.borderColor = '';
+      }, 2000);
+    } else {
+      localStorage.removeItem('savedGeminiApiKey');
+      alert('APIキーの保存を解除しました');
+    }
+  });
+}
+// ================================
 
 miEl.value='gemini-2.5-flash';
 
